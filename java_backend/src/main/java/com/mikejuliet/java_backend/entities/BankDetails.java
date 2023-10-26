@@ -16,6 +16,7 @@ public class BankDetails {
     String bankName;
     String branchName;
     String accountType;
+    @Column(name = "ac_number",unique = true)
     String AC_number;
     @ManyToOne
     @JoinColumn(name = "user_id")
