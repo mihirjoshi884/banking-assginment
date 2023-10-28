@@ -52,7 +52,7 @@ The application uses a MySQL database. You should create a MySQL database and up
 
 
 
-## 6.Access the application at http://localhost:9000/home.jsp
+## 6.Access the application at https://localhost:9000/home.jsp
 
 ## 7. Web Controller
 The application includes a BankingWebController that handles various URL mappings for different pages:
