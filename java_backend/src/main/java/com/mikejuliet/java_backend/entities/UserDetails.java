@@ -19,6 +19,7 @@ public class UserDetails {
     String email;
     @Column(name = "userName", unique = true)
     String userName;
+
     String password;
     String address;
     @OneToMany(mappedBy = "userDetails")

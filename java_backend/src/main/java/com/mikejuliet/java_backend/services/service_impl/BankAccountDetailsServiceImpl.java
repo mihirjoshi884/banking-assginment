@@ -2,14 +2,12 @@ package com.mikejuliet.java_backend.services.service_impl;
 
 import com.mikejuliet.java_backend.entities.BankDetails;
 import com.mikejuliet.java_backend.entities.UserDetails;
+import com.mikejuliet.java_backend.repositories.BankDetailsRepository;
 import com.mikejuliet.java_backend.services.BankAccountDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class BankAccountDetailsServiceImpl implements BankAccountDetailsService {
@@ -17,11 +15,15 @@ public class BankAccountDetailsServiceImpl implements BankAccountDetailsService 
 
     @Autowired
     UserDetailServiceImpl userService;
+    @Autowired
+    BankDetailsRepository bankRepo;
     @Override
     public BankDetails saveBankAccountDetails(String userName,BankDetails bankDetails) {
         UserDetails userDetails = userService.getUserDetailsByUsername(userName);
         String bankId = UUID.randomUUID().toString();
         bankDetails.setBankId(bankId);
+        bankDetails.setUserDetails(userDetails);
+        bankRepo.save(bankDetails);
         if (userDetails.getBankDetails() == null){
             bankAccounts.add(bankDetails);
             userDetails.setBankDetails(bankAccounts);
@@ -35,14 +37,20 @@ public class BankAccountDetailsServiceImpl implements BankAccountDetailsService 
 
     @Override
     public List<BankDetails> getAllBankDetails(String userName) {
-        return userService.getUserDetailsByUsername(userName).getBankDetails();
+        // Assuming you have a UserDetail entity with a user ID and a list of associated bank details
+        UserDetails user = userService.getUserDetailsByUsername(userName);
+        if (user != null) {
+            return user.getBankDetails(); // Assuming you have a getter for bankDetails in UserDetails
+        }
+        return Collections.emptyList(); // Return an empty list if the user is not found
     }
+
 
     @Override
     public BankDetails editBankDetails(String username, BankDetails bankDetails) {
         bankAccounts = userService.getUserDetailsByUsername(username).getBankDetails();
         Optional<BankDetails> matchingBankDetail = bankAccounts.stream()
-                .filter(account -> account.getAC_number().equals(bankDetails.getAC_number()))
+                .filter(account -> account.getAccountNumber().equals(bankDetails.getAccountNumber()))
                 .findFirst();
         if (matchingBankDetail.isPresent()) {
             // Modify the matching bank detail (if needed)

@@ -15,7 +15,9 @@
     <nav>
         <ul>
             <li><a href="/add-account.jsp">Add Bank Account Details</a></li>
-            <li><a href="/get-statement">Get Consolidated Statement</a></li>
+            <li><a href="/get-statement.jsp">Get Consolidated Statement</a></li>
+            <li><a href="/bank-details.jsp"> bank statement</a></li>
+            <li><a href="get-new-bank-statement.jsp"> new bank statement</a></li>
             <li><a href="/logout">Logout</a></li>
         </ul>
     </nav>

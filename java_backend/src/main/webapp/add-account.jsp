@@ -19,25 +19,25 @@
     <label for="accountType">Account Type:</label>
     <input type="text" name="accountType" id="accountType" required><br><br>
 
-    <label for="AC_number">Account Number:</label>
-    <input type="text" name="AC_number" id="AC_number" required><br><br>
+    <label for="accountNumber">Account Number:</label>
+    <input type="text" name="accountNumber" id="accountNumber" required><br><br>
 
     <input type="submit" value="Submit">
 
 </form>
 <div id="success-message" style="display: none;">
-    <p>bank accound details added successfully!</p>
+    <p>bank account details added successfully!</p>
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById("signup-form").addEventListener("submit", function (event) {
+        document.getElementById("add-bank-account-form").addEventListener("submit", function (event) {
             event.preventDefault();
 
             var formData = {
                 bankName: document.getElementById("bankName").value,
                 branchName: document.getElementById("branchName").value,
                 accountType: document.getElementById("accountType").value,
-                AC_number: document.getElementById("AC_number").value
+                accountNumber: document.getElementById("accountNumber").value
             };
 
             fetch("/banking-backend/add-back-ac-detail", {
@@ -47,21 +47,22 @@
                 },
                 body: JSON.stringify(formData)
             })
-                .then(Response=> {
-                    if(Response.status == 201){
+                .then(response => {  // Change 'Response' to 'response' here
+                    if (response.status === 201) {
                         const successMessage = document.getElementById("success-message");
                         successMessage.style.display = "block";
                     }
                     return response.json();
                 })
                 .then(data => {
-                // Handle the response as needed
-                console.log(data);
+                    // Handle the response data as needed
+                    console.log(data);
                 })
                 .catch(error => {
                     // Handle any errors
                     console.error(error);
                 });
+
         });
     });
 </script>

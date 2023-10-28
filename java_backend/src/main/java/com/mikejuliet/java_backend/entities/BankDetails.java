@@ -17,7 +17,7 @@ public class BankDetails {
     String branchName;
     String accountType;
     @Column(name = "ac_number",unique = true)
-    String AC_number;
+    String accountNumber;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserDetails userDetails;
